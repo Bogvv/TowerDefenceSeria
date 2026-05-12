@@ -4,24 +4,35 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public abstract  class Personaggio extends Pane {
-    protected double HP,danno,speed, rangeAttacco;
+    protected double HP,danno,speed, range;
     protected boolean alleato;
     protected boolean fight = false;
 
-    public Personaggio(double HP,double danno, double rangeAttacco,double speed,String[] fileNames, boolean alleato){
+    private ImageView imgWalk;
+    private ImageView imgAttacco;
+
+    public Personaggio(double HP,double danno, double range,double speed,String fileWalk, String fileAttacco, boolean alleato){
         this.HP = HP;
         this.danno = danno;
         this.speed = speed;
-        this.rangeAttacco = rangeAttacco;
+        this.range = range;
         this.alleato = alleato;
 
-        for(String nome : fileNames){
-            Image img = new Image("file:assets/" + nome);
-            ImageView view = new ImageView(img);
-            view.setFitHeight(100);
-            view.setFitHeight(100);
-            this.getChildren().add(view);
-        }
+        this.imgWalk = new ImageView(new Image("file:assets/" + fileWalk));
+        this.imgAttacco = new ImageView(new Image("file:assets/" + fileAttacco));
+
+        this.imgWalk.setFitWidth(100); this.imgWalk.setFitHeight(100);
+        this.imgAttacco.setFitWidth(100); this.imgAttacco.setFitHeight(100);
+
+        this.getChildren().addAll(imgWalk,imgAttacco);
+
+        aggiornaAnimazione();
+
+    }
+
+    public void aggiornaAnimazione(){
+        imgWalk.setVisible(!fight);
+        imgAttacco.setVisible(fight);
     }
 
     public void move(){
@@ -32,12 +43,10 @@ public abstract  class Personaggio extends Pane {
     }
 
     public boolean seeNemico(Personaggio t){
-        double distanza = Math.abs(this.getTranslateX() - t.getTranslateX());
-        return distanza <= this.rangeAttacco;
+        double dist = Math.abs(this.getTranslateX() - t.getTranslateX());
+        return dist <= this.range;
     }
 
     public void subisciDanno(double d){ this.HP -= d;}
     public boolean isDead(){ return HP <= 0;}
-    public double getDanno(){ return danno;}
-    public void setFight(boolean b){this.fight = b;}
 }
