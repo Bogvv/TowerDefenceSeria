@@ -1,6 +1,6 @@
 module com.example.towerDefenceS {
     requires javafx.controls;
-    requires javafx.graphics;
+    requires javafx.fxml;
 
     exports com.example.towerDefenceS;
 }
