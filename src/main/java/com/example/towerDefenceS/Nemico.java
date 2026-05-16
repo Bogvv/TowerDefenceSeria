@@ -20,10 +20,10 @@ public class Nemico extends Personaggio{
     private void configura(String w, String a, double h, double d, double v, double r){
         this.getChildren().clear();
         javafx.scene.image.ImageView vW = new javafx.scene.image.ImageView(new javafx.scene.image.Image("file:assets/" + w));
-        javafx.scene.image.ImageView vA = new javafx.scene.image.ImageView(new javafx.scene.image.Image("file:assets/" + a))
+        javafx.scene.image.ImageView vA = new javafx.scene.image.ImageView(new javafx.scene.image.Image("file:assets/" + a));
         vW.setFitWidth(100); vW.setFitHeight(100);
         vA.setFitWidth(100); vA.setFitHeight(100);
         this.getChildren().addAll(vW, vA);
-        this.HP = h; this.danno; this.speed = v; this.range = r;
+        this.HP = h; this.danno = d; this.speed = v; this.range = r;
     }
 }
