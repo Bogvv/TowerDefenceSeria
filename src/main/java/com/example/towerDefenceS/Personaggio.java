@@ -49,4 +49,12 @@ public abstract  class Personaggio extends Pane {
 
     public void subisciDanno(double d){ this.HP -= d;}
     public boolean isDead(){ return HP <= 0;}
+
+    public void setFight(boolean fight) {
+        this.fight = fight;
+    }
+
+    public double getDanno() {
+        return danno;
+    }
 }
