@@ -18,16 +18,17 @@ public abstract  class Personaggio extends Pane {
         this.range = range;
         this.alleato = alleato;
 
-        this.imgWalk = new ImageView(new Image("file:assets/" + fileWalk));
-        this.imgAttacco = new ImageView(new Image("file:assets/" + fileAttacco));
+        if (!fileWalk.equals("temp.png")){
+            this.imgWalk = new ImageView(new Image(Personaggio.class.getResourceAsStream("/assets/" + fileWalk)));
+            this.imgAttacco = new ImageView(new Image(Personaggio.class.getResourceAsStream("/assets/" + fileAttacco)));
 
-        this.imgWalk.setFitWidth(100); this.imgWalk.setFitHeight(100);
-        this.imgAttacco.setFitWidth(100); this.imgAttacco.setFitHeight(100);
+            this.imgWalk.setFitWidth(100); this.imgWalk.setFitHeight(100);
+            this.imgAttacco.setFitWidth(100); this.imgAttacco.setFitHeight(100);
 
-        this.getChildren().addAll(imgWalk,imgAttacco);
+            this.getChildren().addAll(imgWalk,imgAttacco);
 
-        aggiornaAnimazione();
-
+            aggiornaAnimazione();
+        }
     }
 
     public void aggiornaAnimazione(){
@@ -56,5 +57,13 @@ public abstract  class Personaggio extends Pane {
 
     public double getDanno() {
         return danno;
+    }
+
+    public void setImgWalk(ImageView imgWalk) {
+        this.imgWalk = imgWalk;
+    }
+
+    public void setImgAttacco(ImageView imgAttacco) {
+        this.imgAttacco = imgAttacco;
     }
 }

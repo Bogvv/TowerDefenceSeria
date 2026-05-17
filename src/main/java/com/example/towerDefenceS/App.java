@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class App extends Application {
 
@@ -22,11 +23,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Image sfondo = new Image("file:assets/campo_gioco.png");
+        Image sfondo = new Image(App.class.getResourceAsStream("/assets/campo_gioco.png"));
         gamePane.setBackground(new Background(new BackgroundImage(sfondo, null, null, null, new BackgroundSize(1200, 700, false, false, false, false))));
         HBox menu = new HBox(10);
-        for (int i = 0; i <= 3; i++) {
-            int tipo = 1;
+        for (int i = 1; i <= 3; i++) {
+            final int tipo = i;
             Button b = new Button("Eroe " + i);
             b.setOnAction(e ->{
                 Alleato a = new Alleato(tipo, 400);
@@ -44,9 +45,9 @@ public class App extends Application {
             @Override
             public void handle(long ora) {
                 if (uccisi < 20){
-                    update(); ////
+                    update();
                     if (ora - ultimoSpawn > 2_000_000_000L){
-                        spawm: ////
+                        spawnNemico();
                         ultimoSpawn = ora;
                     }
                 }
@@ -92,6 +93,12 @@ public class App extends Application {
             }
             return false;
         });
+    }
+
+    private void spawnNemico(){
+        Nemico n = new Nemico(new Random().nextInt(3) + 1, 400);
+        nemici.add(n);
+        gamePane.getChildren().add(n);
     }
 
     public static void main(String[] args) {
