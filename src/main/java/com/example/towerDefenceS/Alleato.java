@@ -2,32 +2,25 @@ package com.example.towerDefenceS;
 
 public class Alleato extends Personaggio{
     public Alleato(int tipo, double y){
-        super(100,1,2,60, "temp.png", "temp.png", true);
+        super(100, 1, 60, 2, true);
         setTranslateX(50);setTranslateY(y);
         switch (tipo){
             case 1:
-                configura("walk_contadine.png", "slash_contadine.png", 120, 2, 2, 70);
+                this.HP = 120; this.danno = 2; this.speed = 1.6; this.range = 70;
+                impostaCamminata("walk_contadine.png", 576,256,9,3);
+                impostaAttacco("slash_contadine.png", 512,256,8,3);
                 break;
             case 2:
-                configura("walk_arciere.png", "shoot_arciere.png", 70, 1.5, 2.5, 250);
+                this.HP = 70; this.danno = 1.5; this.speed = 1.8; this.range = 250;
+                impostaCamminata("walk_arciere.png", 1152,512,9,3);
+                impostaAttacco("shoot_arciere.png", 832,256,13,3);
                 break;
             case 3:
-                configura("walk_knight.png", "slash_knight.png", 50, 4, 1.8, 180);
+                this.HP = 50; this.danno = 4; this.speed = 1.3; this.range = 180;
+                impostaCamminata("walk_knight.png", 576,256,9,3);
+                impostaAttacco("slash_knight.png", 1152,768,6,3);
                 break;
         }
-        aggiornaAnimazione();
-    }
-
-    private void configura(String w, String a, double h, double d, double v, double r){
-        this.getChildren().clear();
-        javafx.scene.image.ImageView vW = new javafx.scene.image.ImageView(new javafx.scene.image.Image(Alleato.class.getResourceAsStream("/assets/" + w)));
-        javafx.scene.image.ImageView vA = new javafx.scene.image.ImageView(new javafx.scene.image.Image(Alleato.class.getResourceAsStream("/assets/" + a)));
-        vW.setFitWidth(100); vW.setFitHeight(100);
-        vA.setFitWidth(100); vA.setFitHeight(100);
-        this.getChildren().addAll(vW, vA);
-        setImgWalk(vW);
-        setImgAttacco(vA);
-        this.HP = h; this.danno = d; this.speed = v; this.range = r;
         aggiornaAnimazione();
     }
 }

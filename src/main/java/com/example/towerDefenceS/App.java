@@ -46,7 +46,7 @@ public class App extends Application {
             public void handle(long ora) {
                 if (uccisi < 20){
                     update();
-                    if (ora - ultimoSpawn > 2_000_000_000L){
+                    if (ora - ultimoSpawn > 5_000_000_000L){
                         spawnNemico();
                         ultimoSpawn = ora;
                     }
@@ -74,6 +74,7 @@ public class App extends Application {
             a.aggiornaAnimazione();
         }
         for (Nemico n : nemici){
+            n.setFight(false);
             n.move();
             n.aggiornaAnimazione();
         }

@@ -1,4 +1,5 @@
 package com.example.towerDefenceS;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -11,29 +12,78 @@ public abstract  class Personaggio extends Pane {
     private ImageView imgWalk;
     private ImageView imgAttacco;
 
-    public Personaggio(double HP,double danno, double range,double speed,String fileWalk, String fileAttacco, boolean alleato){
+    private double wFrameW, wFrameH;
+    private int wMaxFrame;
+    private int wRigaIndice;
+
+    private double aFrameW, aFrameH;
+    private int aMaxFrame;
+    private int aRigaIndice;
+
+    private int frameCorrente = 0;
+    private int tickCounter = 0;
+    private final int TICK_PER_FRAME = 10;
+
+    public Personaggio(double HP,double danno, double range,double speed, boolean alleato){
         this.HP = HP;
         this.danno = danno;
         this.speed = speed;
         this.range = range;
         this.alleato = alleato;
+    }
 
-        if (!fileWalk.equals("temp.png")){
-            this.imgWalk = new ImageView(new Image(Personaggio.class.getResourceAsStream("/assets/" + fileWalk)));
-            this.imgAttacco = new ImageView(new Image(Personaggio.class.getResourceAsStream("/assets/" + fileAttacco)));
+    protected void impostaCamminata(String file, double imgW, double imgH, int maxFrame, int riga){
+        this.wMaxFrame = maxFrame;
+        this.wRigaIndice = riga;
+        this.wFrameW = imgW/maxFrame;
+        this.wFrameH = imgH/4.0;
 
-            this.imgWalk.setFitWidth(100); this.imgWalk.setFitHeight(100);
-            this.imgAttacco.setFitWidth(100); this.imgAttacco.setFitHeight(100);
+        this.imgWalk = new ImageView(new Image(Personaggio.class.getResourceAsStream("/assets/" + file)));
+        this.imgWalk.setFitWidth(wFrameW);
+        this.imgWalk.setFitHeight(wFrameH);
 
-            this.getChildren().addAll(imgWalk,imgAttacco);
+        this.imgWalk.setViewport(new Rectangle2D(0, wRigaIndice*wFrameH, wFrameW,wFrameH));
+        this.getChildren().add(this.imgWalk);
+    }
 
-            aggiornaAnimazione();
-        }
+    protected void impostaAttacco(String file, double imgW, double imgH, int maxFrame, int riga){
+        this.aMaxFrame = maxFrame;
+        this.aRigaIndice = riga;
+        this.aFrameW = imgW/maxFrame;
+        this.aFrameH = imgH/4.0;
+
+        this.imgAttacco = new ImageView(new Image(Personaggio.class.getResourceAsStream("/assets/" + file)));
+        this.imgAttacco.setFitWidth(aFrameW);
+        this.imgAttacco.setFitHeight(aFrameH);
+
+        this.imgAttacco.setViewport(new Rectangle2D(0, aRigaIndice*aFrameH,aFrameW,aFrameH));
+        this.getChildren().add(this.imgAttacco);
     }
 
     public void aggiornaAnimazione(){
+        if (imgWalk == null || imgAttacco == null) return;
         imgWalk.setVisible(!fight);
         imgAttacco.setVisible(fight);
+
+        tickCounter++;
+        if (tickCounter >= TICK_PER_FRAME){
+            tickCounter = 0;
+            frameCorrente++;
+        }
+
+        if (!fight){
+            if (frameCorrente >= wMaxFrame) frameCorrente = 0;
+            double xRitaglio = frameCorrente * wFrameW;
+            double yRitaglio = wRigaIndice * wFrameH;
+
+            imgWalk.setViewport(new Rectangle2D(xRitaglio, yRitaglio, wFrameW, wFrameH));
+        }else{
+            if (frameCorrente >= aMaxFrame) frameCorrente = 0;
+            double xRitaglio = frameCorrente * aFrameW;
+            double yRitaglio = aRigaIndice * aFrameH;
+
+            imgAttacco.setViewport(new Rectangle2D(xRitaglio, yRitaglio, aFrameW, aFrameH));
+        }
     }
 
     public void move(){
@@ -52,6 +102,9 @@ public abstract  class Personaggio extends Pane {
     public boolean isDead(){ return HP <= 0;}
 
     public void setFight(boolean fight) {
+        if (this.fight != fight){
+            this.frameCorrente = 0;
+        }
         this.fight = fight;
     }
 
