@@ -14,6 +14,7 @@ public class Alleato extends Personaggio{
                 this.HP = 70; this.danno = 1.5; this.speed = 1.8; this.range = 250;
                 impostaCamminata("walk_arciere.png", 1152,512,9,3);
                 impostaAttacco("shoot_arciere.png", 832,256,13,3);
+                setTranslateY(y - 95);
                 break;
             case 3:
                 this.HP = 50; this.danno = 4; this.speed = 1.3; this.range = 200;
