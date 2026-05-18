@@ -39,8 +39,8 @@ public abstract  class Personaggio extends Pane {
         this.wFrameH = imgH/4.0;
 
         this.imgWalk = new ImageView(new Image(Personaggio.class.getResourceAsStream("/assets/" + file)));
-        this.imgWalk.setFitWidth(wFrameW);
-        this.imgWalk.setFitHeight(wFrameH);
+        this.imgWalk.setFitWidth(wFrameW * 3);
+        this.imgWalk.setFitHeight(wFrameH * 3);
 
         this.imgWalk.setViewport(new Rectangle2D(0, wRigaIndice*wFrameH, wFrameW,wFrameH));
         this.getChildren().add(this.imgWalk);
@@ -53,8 +53,8 @@ public abstract  class Personaggio extends Pane {
         this.aFrameH = imgH/4.0;
 
         this.imgAttacco = new ImageView(new Image(Personaggio.class.getResourceAsStream("/assets/" + file)));
-        this.imgAttacco.setFitWidth(aFrameW);
-        this.imgAttacco.setFitHeight(aFrameH);
+        this.imgAttacco.setFitWidth(aFrameW * 3);
+        this.imgAttacco.setFitHeight(aFrameH * 3);
 
         this.imgAttacco.setViewport(new Rectangle2D(0, aRigaIndice*aFrameH,aFrameW,aFrameH));
         this.getChildren().add(this.imgAttacco);

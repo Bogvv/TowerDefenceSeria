@@ -36,7 +36,7 @@ public class App extends Application {
             });
             menu.getChildren().add(b);
         }
-        menu.setLayoutY(640);menu.setLayoutX(500);
+        menu.setLayoutY(20);menu.setLayoutX(500);
         gamePane.getChildren().add(menu);
 
         new AnimationTimer(){
